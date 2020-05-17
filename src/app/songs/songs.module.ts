@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SongListComponent } from './song-list/song-list.component';
 import { SongInfoComponent } from './song-info/song-info.component';
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { SongsApiService } from './api/songs-api.service';
+import { SongFilterComponent } from './song-filter/song-filter.component';
 
 @NgModule({
-  declarations: [SongListComponent, SongInfoComponent],
+  declarations: [SongListComponent, SongInfoComponent, SongFilterComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
