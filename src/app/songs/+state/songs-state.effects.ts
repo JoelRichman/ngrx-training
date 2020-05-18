@@ -10,7 +10,7 @@ import { SongsStateFacade } from './songs-state.facade';
 
 @Injectable()
 export class SongsStateEffects {
-  getSongs = createEffect(() =>
+  getSongs$ = createEffect(() =>
     this.actions$.pipe(
       ofType(actions.GetSongs),
       withLatestFrom(this.facade.searchFilter$, this.facade.genreFilter$),
