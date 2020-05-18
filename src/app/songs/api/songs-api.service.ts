@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ISong } from './song.model';
 import { Action } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import * as actions from '../+state/songs-state.actions';
 
@@ -14,6 +14,6 @@ export class SongsApiService {
   getSongs(): Observable<Action> {
     return this.httpClient
       .get<ISong[]>('/assets/data/songs.json')
-      .pipe(map(songs => actions.SetSongs({ songs })));
+      .pipe(switchMap(songs => of(actions.SetSongs({ songs }))));
   }
 }

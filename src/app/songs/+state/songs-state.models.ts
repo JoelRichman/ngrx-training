@@ -9,7 +9,7 @@ export interface ISongsState {
 export const InitialSongsState: ISongsState = {
   songs: [],
   searchString: '',
-  genreFilter: 'all'
+  genreFilter: ''
 };
 
 export const SongsStateKey = 'songs';

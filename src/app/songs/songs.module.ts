@@ -10,6 +10,7 @@ import { SongsStateKey } from './+state/songs-state.models';
 import { SongsStateEffects } from './+state/songs-state.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { SongsStateFacade } from './+state/songs-state.facade';
+import { SongFilterComponent } from './song-filter/song-filter.component';
 
 const ROUTES = [
   { path: '', redirectTo: 'list', pathMatch: 'full' },
@@ -24,7 +25,7 @@ const ROUTES = [
 ];
 
 @NgModule({
-  declarations: [SongListComponent, SongInfoComponent],
+  declarations: [SongListComponent, SongInfoComponent, SongFilterComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(ROUTES),

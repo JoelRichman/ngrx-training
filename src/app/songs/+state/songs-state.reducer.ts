@@ -15,6 +15,12 @@ export const SongStateReducer = createReducer(InitialSongsState,
     const newState = { ...state };
     newState.searchString = action.searchString;
     return newState;
+  }),
+
+  on(actions.SetGenreFilter, (state, { genreFilter }) => {
+    const newState = { ...state };
+    newState.genreFilter = genreFilter;
+    return newState;
   })
 
 );

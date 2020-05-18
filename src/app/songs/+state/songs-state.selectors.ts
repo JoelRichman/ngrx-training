@@ -1,26 +1,36 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { SongsStateKey, ISongsState } from './songs-state.models';
 
-
 export const querySongsState = createFeatureSelector<ISongsState>(SongsStateKey);
 
-export const querySongs  = createSelector(querySongsState, state => state.songs);
-export const querySongSearchString = createSelector(querySongsState, state => state.searchString);
+export const querySongs = createSelector(querySongsState, (state) => state.songs);
+export const querySongSearchString = createSelector(querySongsState, (state) => state.searchString);
+export const querySongGenreFilter = createSelector(querySongsState, (state) => state.genreFilter);
 
-export const querySongList = createSelector(querySongs, querySongSearchString, (songs, search) => {
-  if (!songs.filter) {
-    return songs;
+export const querySongList = createSelector(
+  querySongs,
+  querySongSearchString,
+  querySongGenreFilter,
+  (songs, search, genre) => {
+    let filteredSongs = songs;
+
+    if (genre) {
+      filteredSongs = filteredSongs.filter(x => x.genre === genre);
+    }
+
+    if (songs.filter) {
+      filteredSongs = filteredSongs.filter((x) => {
+        return x.title.toLowerCase().indexOf(search.toLowerCase()) > -1;
+      });
+    }
+
+    return filteredSongs;
   }
+);
 
-  return songs.filter((x) => {
-    return x.title.toLowerCase()
-      .indexOf(search.toLowerCase()) > -1;
-  });
+export const queryGenreList = createSelector(querySongs, (songs) => {
+  const genres = songs.map((x) => x.genre);
+  genres.unshift('');
+  const genreList = new Set(genres);
+  return genreList;
 });
-
-export const queryGenreList = createSelector(querySongs, songs => {
-  const genreList = new Set();
-  genreList.add(songs.map(x => x.genre));
-});
-
-
