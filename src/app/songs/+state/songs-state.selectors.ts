@@ -18,4 +18,9 @@ export const querySongList = createSelector(querySongs, querySongSearchString, (
   });
 });
 
+export const queryGenreList = createSelector(querySongs, songs => {
+  const genreList = new Set();
+  genreList.add(songs.map(x => x.genre));
+});
+
 
