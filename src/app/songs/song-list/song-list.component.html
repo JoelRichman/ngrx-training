@@ -3,7 +3,7 @@
       <div class="card-header">
         Songs:
         <div style="float: right;">
-            <input placeholder="search" (input)="onSearch($event.currentTarget.value)" />
+            <input placeholder="search" (input)="onSearch($event.currentTarget.value)" [value]="searchFilter$ | async" />
         </div>
       </div>
       <table class="table">
@@ -15,15 +15,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let song of filteredSongList" [routerLink]="['/', 'songs', 'info', song.songId]">
+          <tr *ngFor="let song of songsList$ | async" [routerLink]="['/', 'songs', 'info', song.songId]">
             <td>{{ song.title }}</td>
             <td>{{ song.artist }}</td>
             <td>{{ song.length }}</td>
           </tr>
         </tbody>
       </table>
-      <div id="loadingDiv" *ngIf="songListSnapshot.length == 0">
-        Getting songs from the server ...
-      </div>
     </div>
 </div>

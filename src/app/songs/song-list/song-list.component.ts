@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SongsApiService } from '../api/songs-api.service';
-import { ISong } from '../api/song.model';
 import { Subscription } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { SetSongs, SetSearchString } from '../+state/songs-state.actions';
+import { querySongList, querySongSearchString } from '../+state/songs-state.selectors';
 
 @Component({
   selector: 'app-song-list',
@@ -9,19 +11,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./song-list.component.scss'],
 })
 export class SongListComponent implements OnInit, OnDestroy {
-  songListSnapshot: ISong[] = [];
-  filteredSongList: ISong[] = [];
   songSubscription: Subscription;
 
-  constructor(private songsApi: SongsApiService) {}
+  songsList$ = this.store.pipe(select(querySongList));
+  searchFilter$ = this.store.pipe(select(querySongSearchString));
+
+  constructor(private store: Store, private songsApi: SongsApiService) {}
 
   ngOnInit(): void {
     this.songSubscription = this.songsApi
       .getSongs()
       .subscribe(
         (songs) => {
-          this.songListSnapshot = songs;
-          this.filteredSongList = songs;
+          this.store.dispatch(SetSongs({ songs }));
         });
   }
 
@@ -30,15 +32,6 @@ export class SongListComponent implements OnInit, OnDestroy {
   }
 
   onSearch(search: string) {
-    if (!search) {
-      this.filteredSongList = this.songListSnapshot;
-      return;
-    }
-
-    this.filteredSongList = this.songListSnapshot
-      .filter((x) => {
-        return x.title.toLowerCase()
-          .indexOf(search.toLowerCase()) > -1;
-      });
+    this.store.dispatch(SetSearchString({ searchString: search }));
   }
 }
