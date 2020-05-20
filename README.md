@@ -8,7 +8,7 @@
 
 ## Branches
 
-###Master
+### Master
 
 Master is a basic application for listing and searching songs. The SongsList component has a list of songs that can be filtered through a search input box. It calls an API and subscribes to the response to populate the list box. All of the data and business logic are in the component.
 
@@ -32,7 +32,7 @@ Master is a basic application for listing and searching songs. The SongsList com
 
 **Branch 9 -** has unit tests for the selectors, reducer and effects.
 
-##Development server
+## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
